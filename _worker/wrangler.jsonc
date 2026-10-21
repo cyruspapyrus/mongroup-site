@@ -9,7 +9,7 @@
   "observability": { "enabled": true },
   "kv_namespaces": [{ "binding": "LEADS", "id": "253f83fd57d64b2a85265d1800341f04" }],
   "vars": {
-    "MAIL_TO": "cyrus@mon.group",
+    "MAIL_TO": "cyrus@mon.group, robin@mon.group",
     "MAIL_FROM": "Mon Group website <leads@copia.co>"
   }
   // Secret (wrangler secret put): RESEND_API_KEY, a sending-only key for copia.co

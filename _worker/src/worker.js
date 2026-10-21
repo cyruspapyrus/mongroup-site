@@ -1,5 +1,5 @@
 // Lead form backend for www.mon.group.
-// POST /lead (JSON) from the contact page: validate, save to KV, email the lead to MAIL_TO via Resend.
+// POST /lead (JSON) from the contact page: validate, save to KV, email the lead to MAIL_TO (comma-separated) via Resend.
 // A lead is stored before the email is attempted, so a mail failure never loses one.
 
 const SITE_ORIGINS = ["https://www.mon.group", "https://mon.group"];
@@ -96,7 +96,7 @@ async function sendEmail(env, lead, meta) {
     headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, "Content-Type": "application/json" },
     body: JSON.stringify({
       from: env.MAIL_FROM,
-      to: [env.MAIL_TO],
+      to: String(env.MAIL_TO).split(",").map((s) => s.trim()).filter(Boolean),
       reply_to: lead.email,
       subject: `New lead: ${lead.full_name} (${company}), ${lead.ad_spend}/mo, ${lead.help_with}`,
       html: emailHtml(lead, meta),

@@ -45,6 +45,23 @@
     window.__mgVideoObserver = io;
   }
 
+  // Report numbers count up each time their panel is shown.
+  const countUp = (root) => {
+    $$("[data-count]", root).forEach((el) => {
+      const to = parseFloat(el.dataset.count);
+      const dec = Number(el.dataset.decimals || 0);
+      const fmt = (v) => `${el.dataset.prefix || ""}${v.toFixed(dec)}${el.dataset.suffix || ""}`;
+      if (reduceMotion) { el.textContent = fmt(to); return; }
+      const t0 = performance.now();
+      const step = (t) => {
+        const p = Math.min(1, (t - t0) / 1100);
+        el.textContent = fmt(to * (1 - Math.pow(1 - p, 3)));
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    });
+  };
+
   // Service tabs.
   const tabs = $$(".svc-tab");
   if (tabs.length) {
@@ -61,6 +78,7 @@
           $$("video", panel).forEach((v) => {
             if (on && !reduceMotion) { const p = v.play(); if (p && p.catch) p.catch(() => {}); } else { v.pause(); }
           });
+          if (on) countUp(panel);
         }
       });
       if (focus) tab.focus();
