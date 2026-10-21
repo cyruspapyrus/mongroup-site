@@ -1,0 +1,16 @@
+{
+  // Lead form backend for www.mon.group (static site on GitHub Pages).
+  // Deploys to mongroup-leads.<subdomain>.workers.dev. Every lead is saved in KV, then emailed.
+  "name": "mongroup-leads",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-09-01",
+  "workers_dev": true,
+  "preview_urls": false,
+  "observability": { "enabled": true },
+  "kv_namespaces": [{ "binding": "LEADS", "id": "253f83fd57d64b2a85265d1800341f04" }],
+  "vars": {
+    "MAIL_TO": "cyrus@mon.group",
+    "MAIL_FROM": "Mon Group website <leads@copia.co>"
+  }
+  // Secret (wrangler secret put): RESEND_API_KEY, a sending-only key for copia.co
+}

@@ -1,0 +1,10 @@
+{
+  "name": "mongroup-leads",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "deploy": "npx wrangler@4 deploy",
+    "tail": "npx wrangler@4 tail",
+    "leads": "npx wrangler@4 kv key list --binding LEADS --remote"
+  }
+}
